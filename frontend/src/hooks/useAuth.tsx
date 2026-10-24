@@ -79,7 +79,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthContextValue>(
     () => ({
       user: meQ.isError ? null : (meQ.data ?? null),
-      isLoading: hasToken && meQ.isLoading,
+      // isPending (not isLoading) so the window between the token being set
+      // and the /me fetch actually starting still counts as "loading" —
+      // otherwise RequireAuth briefly sees `user: null` and bounces to
+      // /login right after a successful Google sign-in.
+      isLoading: hasToken && meQ.isPending,
       loginWithGoogle,
       logout,
     }),

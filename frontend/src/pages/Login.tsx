@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
@@ -13,6 +13,13 @@ export default function Login() {
   const [busy, setBusy] = useState(false)
 
   const configured = !!import.meta.env.VITE_GOOGLE_CLIENT_ID
+
+  // Covers the case where auth state finishes settling (e.g. in the
+  // background from an earlier attempt) after this page has already
+  // rendered — navigate away instead of leaving the user stuck here.
+  useEffect(() => {
+    if (auth.user) nav('/', { replace: true })
+  }, [auth.user, nav])
 
   async function onGoogleSuccess(resp: CredentialResponse) {
     if (!resp.credential) {
