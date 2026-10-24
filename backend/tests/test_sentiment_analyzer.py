@@ -95,7 +95,7 @@ async def test_analyze_sends_cache_control_and_returns_structured():
         reasoning="Title says crash but body shows clean beat.",
     )
 
-    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-haiku-4-5")
+    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-sonnet-5-5")
     parse_mock = AsyncMock(return_value=_fake_response(parsed, cache_create=5000))
 
     with patch.object(analyzer.client.messages, "parse", parse_mock):
@@ -108,7 +108,7 @@ async def test_analyze_sends_cache_control_and_returns_structured():
 
     parse_mock.assert_awaited_once()
     call_kwargs = parse_mock.await_args.kwargs
-    assert call_kwargs["model"] == "claude-haiku-4-5"
+    assert call_kwargs["model"] == "claude-sonnet-5-5"
     assert call_kwargs["system"][0]["text"] == SYSTEM_PROMPT
     assert call_kwargs["system"][0]["cache_control"] == {"type": "ephemeral"}
     assert call_kwargs["output_format"] is SentimentAnalysis
@@ -134,7 +134,7 @@ async def test_analyze_cache_warm_path():
         is_clickbait=False,
         reasoning="Body confirms title.",
     )
-    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-haiku-4-5")
+    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-sonnet-5-5")
     parse_mock = AsyncMock(return_value=_fake_response(parsed, cache_read=4800))
     with patch.object(analyzer.client.messages, "parse", parse_mock):
         _, usage = await analyzer.analyze(content="Body text here.", title="X")
@@ -155,7 +155,7 @@ async def test_analyze_falls_back_to_neutral_on_parse_failure():
             cache_read_input_tokens=4800,
         ),
     )
-    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-haiku-4-5")
+    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-sonnet-5-5")
     parse_mock = AsyncMock(return_value=refusal_response)
     with patch.object(analyzer.client.messages, "parse", parse_mock):
         result, _ = await analyzer.analyze(content="suspicious content")
@@ -174,7 +174,7 @@ async def test_analyze_truncates_long_content():
         is_clickbait=False,
         reasoning="x",
     )
-    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-haiku-4-5")
+    analyzer = SentimentAnalyzer(api_key="test-key", model="claude-sonnet-5-5")
     parse_mock = AsyncMock(return_value=_fake_response(parsed))
     very_long = "X" * 50_000
     with patch.object(analyzer.client.messages, "parse", parse_mock):

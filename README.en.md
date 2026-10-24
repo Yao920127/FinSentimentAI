@@ -4,7 +4,7 @@
 
 **News-driven financial sentiment dashboard**
 
-Sentiment computed from the **full article body** — not the headline — by **Claude Haiku 4.5**.
+Sentiment computed from the **full article body** — not the headline — by **Claude Sonnet 5.5**.
 
 **🌐 English · [繁體中文](README.md)**
 
@@ -18,7 +18,7 @@ Sentiment computed from the **full article body** — not the headline — by **
 
 ## What this is
 
-FinSentiment AI is a news-driven sentiment dashboard for **US + Taiwan equities**. The defining product idea is **anti-clickbait**: sentiment is computed from the **full article body** — not the headline — by **Claude Haiku 4.5**, with bilingual (zh-TW + en) structured output. A single LLM replaces the original FinBERT + Chinese-RoBERTa plan, dropping the 2.4 GB torch dependency.
+FinSentiment AI is a news-driven sentiment dashboard for **US + Taiwan equities**. The defining product idea is **anti-clickbait**: sentiment is computed from the **full article body** — not the headline — by **Claude Sonnet 5.5**, with bilingual (zh-TW + en) structured output. A single LLM replaces the original FinBERT + Chinese-RoBERTa plan, dropping the 2.4 GB torch dependency.
 
 > The system is **fully multi-tenant / per-user isolated**: every user has their own watchlist, their own news/sentiment data, and their own encrypted API keys. There is **no background scheduler** — all analysis is **on-demand**, triggered by each user with their own keys.
 
@@ -47,7 +47,7 @@ FinSentiment AI is a news-driven sentiment dashboard for **US + Taiwan equities*
               ▼                                   ▼
      ┌─────────────────┐                ┌───────────────────┐
      │  Pipeline       │   un-analyzed  │  Sentiment        │
-     │  6 fetchers     │──── rows ─────▶│  Claude Haiku 4.5 │
+     │  6 fetchers     │──── rows ─────▶│  Claude Sonnet 5.5 │
      │  → 3-layer      │                │  + prompt cache    │
      │    extraction   │                │  bilingual output  │
      │  → dedupe       │                └───────────────────┘
@@ -73,7 +73,7 @@ FinSentiment AI is a news-driven sentiment dashboard for **US + Taiwan equities*
 
 ## AI design highlights
 
-- **Claude Haiku 4.5** — one model for both Chinese and English, replacing a two-model FinBERT + RoBERTa stack.
+- **Claude Sonnet 5.5** — one model for both Chinese and English, replacing a two-model FinBERT + RoBERTa stack.
 - **Prompt caching** — the system prompt is deliberately **> 4096 tokens** to hit Haiku 4.5's cache minimum, saving ~90% on input cost from the 2nd article onward.
 - **Bilingual structured output** — 9 fields per article: `label` / `confidence` / `is_clickbait` / `title_zh` / `title_en` / `key_drivers_zh` / `key_drivers_en` / `reasoning_zh` / `reasoning_en`.
 - **Clickbait detection** — `is_clickbait` flags articles where the title contradicts the body's sentiment.
@@ -162,7 +162,7 @@ cd frontend && bun run lint                                    # ESLint
 |---|---|
 | Frontend | React 19 · Vite 8 · TypeScript 6 · Tailwind 3 · Recharts · React Router 7 · TanStack Query 5 · i18next (zh/en) · Google OAuth · Zod · lucide-react |
 | Backend | FastAPI · SQLAlchemy 2.0 (async) · Alembic · Pydantic v2 · asyncpg · httpx · tenacity · loguru · trafilatura · passlib · python-jose |
-| AI | Anthropic SDK + Claude Haiku 4.5 (structured output + prompt caching) |
+| AI | Anthropic SDK + Claude Sonnet 5.5 (structured output + prompt caching) |
 | Database | PostgreSQL 16 |
 | Container | Docker Compose (postgres + pgAdmin + backend + frontend nginx) |
 | Deploy | Railway |

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-FinSentiment AI: news-driven sentiment dashboard for US + Taiwan equities. The defining product idea is "anti-clickbait" — sentiment is computed from **full article body**, not headline, by **Claude Haiku 4.5** with bilingual (zh-TW + en) structured output. Replaces the original FinBERT + Chinese-RoBERTa plan with one LLM.
+FinSentiment AI: news-driven sentiment dashboard for US + Taiwan equities. The defining product idea is "anti-clickbait" — sentiment is computed from **full article body**, not headline, by **Claude Sonnet 5.5** with bilingual (zh-TW + en) structured output. Replaces the original FinBERT + Chinese-RoBERTa plan with one LLM.
 
 ## Common commands
 

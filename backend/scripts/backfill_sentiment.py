@@ -1,5 +1,5 @@
-"""Backfill Claude Haiku 4.5 sentiment over all news + social posts that
-don't yet have a ``model_version='claude-haiku-4-5'`` row.
+"""Backfill Claude Sonnet 5.5 sentiment over all news + social posts that
+don't yet have a ``model_version='claude-sonnet-5-5'`` row.
 
 The Alpha Vantage baseline rows (``model_version='alpha_vantage_v1'``) are
 left alone — they live alongside ours and feed ``compare_baselines.py``.
@@ -35,7 +35,7 @@ from models.sentiment import SentimentResult
 from models.stock import Stock
 from services.sentiment_analyzer import SentimentAnalyzer, build_analyzer, get_analyzer
 
-CLAUDE_MODEL_VERSION = "claude-haiku-4-5"
+CLAUDE_MODEL_VERSION = "claude-sonnet-5-5"
 CONCURRENCY = 5
 
 

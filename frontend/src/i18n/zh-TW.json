@@ -29,7 +29,7 @@
   },
   "dashboard": {
     "title": "市場情緒總覽",
-    "subtitle": "基於 Claude Haiku 4.5 分析的全內文情緒（解標題殺人）"
+    "subtitle": "基於 Claude Sonnet 5.5 分析的全內文情緒（解標題殺人）"
   },
   "market": {
     "today_title": "今日市場情緒",
@@ -74,7 +74,7 @@
   },
   "news_list": {
     "title": "新聞列表",
-    "subtitle": "基於 Claude Haiku 4.5 全內文情緒分析",
+    "subtitle": "基於 Claude Sonnet 5.5 全內文情緒分析",
     "search_placeholder": "搜尋新聞標題或股票代號…",
     "filter_label": "篩選：",
     "empty": "沒有符合條件的新聞",
@@ -160,7 +160,7 @@
     "keys": {
       "anthropic": {
         "label": "Anthropic API Key",
-        "help": "驅動 Claude Haiku 4.5 情緒分析；必填。"
+        "help": "驅動 Claude Sonnet 5.5 情緒分析；必填。"
       },
       "marketaux": {
         "label": "Marketaux Key",

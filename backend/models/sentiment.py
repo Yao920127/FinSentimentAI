@@ -44,7 +44,7 @@ class SentimentResult(Base):
     confidence: Mapped[float] = mapped_column(Float)
     analyzed_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     model_version: Mapped[str] = mapped_column(
-        String(80), default="claude-haiku-4-5", index=True
+        String(80), default="claude-sonnet-5-5", index=True
     )
     # LLM-specific structured output (key_drivers, is_clickbait, reasoning).
     # NULL for non-LLM rows like alpha_vantage_v1 baselines.

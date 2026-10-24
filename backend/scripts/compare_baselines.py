@@ -1,7 +1,7 @@
-"""Compare Claude Haiku 4.5 sentiment against Alpha Vantage's built-in baseline.
+"""Compare Claude Sonnet 5.5 sentiment against Alpha Vantage's built-in baseline.
 
 For every news row that has BOTH:
-  * a ``model_version='claude-haiku-4-5'`` row in sentiment_results, AND
+  * a ``model_version='claude-sonnet-5-5'`` row in sentiment_results, AND
   * a ``model_version='alpha_vantage_v1'`` row in sentiment_results
 we compute the per-label confusion matrix and overall agreement rate.
 
@@ -24,7 +24,7 @@ from models.comment import Comment
 from models.news import News
 from models.sentiment import SentimentResult
 
-CLAUDE = "claude-haiku-4-5"
+CLAUDE = "claude-sonnet-5-5"
 AV = "alpha_vantage_v1"
 LABELS = ("positive", "neutral", "negative")
 

@@ -1,4 +1,4 @@
-"""Claude Haiku 4.5 sentiment analyzer for financial news + social posts.
+"""Claude Sonnet 5.5 sentiment analyzer for financial news + social posts.
 
 Replaces the original FinBERT + Chinese-RoBERTa plan. One LLM handles English
 financial news (Marketaux/Finnhub/NewsAPI/AlphaVantage) AND Traditional Chinese
@@ -666,7 +666,7 @@ analysis is wasted. Never include markdown, never include preamble like
 
 
 class SentimentAnalyzer:
-    """Async sentiment analyzer using Claude Haiku 4.5 with prompt caching."""
+    """Async sentiment analyzer using Claude Sonnet 5.5 with prompt caching."""
 
     def __init__(self, *, api_key: str, model: str) -> None:
         self.client = AsyncAnthropic(api_key=api_key)

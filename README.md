@@ -4,7 +4,7 @@
 
 **新聞驅動的金融情緒儀表板**
 
-由 **Claude Haiku 4.5** 分析**完整新聞內文**（而非標題），破解財經報導的「標題殺人」。
+由 **Claude Sonnet 5.5** 分析**完整新聞內文**（而非標題），破解財經報導的「標題殺人」。
 
 **🌐 [English](README.en.md) · 繁體中文**
 
@@ -18,7 +18,7 @@
 
 ## 這是什麼
 
-FinSentiment AI 是一個針對**美股 + 台股**的新聞情緒儀表板。核心產品理念是 **anti-clickbait（反標題殺人）**：情緒分數來自 **Claude Haiku 4.5** 對**整篇新聞內文**的雙語（繁中 + 英文）結構化分析，而不是只看標題。一顆 LLM 取代了原計劃的 FinBERT + 中文 RoBERTa 雙模型方案，免去扛 2.4GB torch 的負擔。
+FinSentiment AI 是一個針對**美股 + 台股**的新聞情緒儀表板。核心產品理念是 **anti-clickbait（反標題殺人）**：情緒分數來自 **Claude Sonnet 5.5** 對**整篇新聞內文**的雙語（繁中 + 英文）結構化分析，而不是只看標題。一顆 LLM 取代了原計劃的 FinBERT + 中文 RoBERTa 雙模型方案，免去扛 2.4GB torch 的負擔。
 
 > 系統是 **完全多租戶 / per-user 隔離** 的：每位使用者有自己的觀察清單、自己的新聞與情緒資料、以及自己加密儲存的 API key。沒有任何背景排程器 — **所有分析都是 on-demand**，由使用者用自己的 key 主動觸發。
 
@@ -47,7 +47,7 @@ FinSentiment AI 是一個針對**美股 + 台股**的新聞情緒儀表板。核
               ▼                                   ▼
      ┌─────────────────┐                ┌───────────────────┐
      │  Pipeline       │   un-analyzed  │  Sentiment        │
-     │  6 個 fetcher    │──── rows ─────▶│  Claude Haiku 4.5 │
+     │  6 個 fetcher    │──── rows ─────▶│  Claude Sonnet 5.5 │
      │  → 三層內文擷取   │                │  + prompt cache    │
      │  → 去重入庫       │                │  雙語結構化輸出      │
      └─────────────────┘                └───────────────────┘
@@ -72,7 +72,7 @@ FinSentiment AI 是一個針對**美股 + 台股**的新聞情緒儀表板。核
 
 ## AI 設計亮點
 
-- **Claude Haiku 4.5** 一顆模型搞定中英文，取代 FinBERT + 中文 RoBERTa 雙模型。
+- **Claude Sonnet 5.5** 一顆模型搞定中英文，取代 FinBERT + 中文 RoBERTa 雙模型。
 - **Prompt caching**：system prompt 刻意 **> 4096 tokens** 以達 Haiku 4.5 最低快取門檻，第 2 篇起 input 省 ~90% 成本。
 - **雙語結構化輸出**：每篇回傳 9 個欄位 — `label` / `confidence` / `is_clickbait` / `title_zh` / `title_en` / `key_drivers_zh` / `key_drivers_en` / `reasoning_zh` / `reasoning_en`。
 - **標題殺人偵測**：`is_clickbait` 自動標記 title 與 body 情緒矛盾的新聞。
@@ -161,7 +161,7 @@ cd frontend && bun run lint                                    # ESLint
 |---|---|
 | 前端 | React 19 · Vite 8 · TypeScript 6 · Tailwind 3 · Recharts · React Router 7 · TanStack Query 5 · i18next（中/英） · Google OAuth · Zod · lucide-react |
 | 後端 | FastAPI · SQLAlchemy 2.0 (async) · Alembic · Pydantic v2 · asyncpg · httpx · tenacity · loguru · trafilatura · passlib · python-jose |
-| AI | Anthropic SDK + Claude Haiku 4.5（結構化輸出 + prompt caching） |
+| AI | Anthropic SDK + Claude Sonnet 5.5（結構化輸出 + prompt caching） |
 | 資料庫 | PostgreSQL 16 |
 | Container | Docker Compose（postgres + pgAdmin + backend + frontend nginx） |
 | 部署 | Railway |

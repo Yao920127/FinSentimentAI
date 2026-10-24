@@ -18,7 +18,7 @@ from schemas.news import NewsDetailResponse, NewsListItem, SentimentSnippet
 from services.auth import current_user
 from services.translator import TranslationError, translate_news
 
-CLAUDE_MODEL_VERSION = "claude-haiku-4-5"
+CLAUDE_MODEL_VERSION = "claude-sonnet-5-5"
 
 router = APIRouter(prefix="/api/news", tags=["news"])
 

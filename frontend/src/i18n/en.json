@@ -29,7 +29,7 @@
   },
   "dashboard": {
     "title": "Market Sentiment Overview",
-    "subtitle": "Full-content sentiment analysis powered by Claude Haiku 4.5 (anti-clickbait)"
+    "subtitle": "Full-content sentiment analysis powered by Claude Sonnet 5.5 (anti-clickbait)"
   },
   "market": {
     "today_title": "Today's Market Sentiment",
@@ -74,7 +74,7 @@
   },
   "news_list": {
     "title": "News",
-    "subtitle": "Full-content sentiment analysis via Claude Haiku 4.5",
+    "subtitle": "Full-content sentiment analysis via Claude Sonnet 5.5",
     "search_placeholder": "Search headlines or ticker symbols…",
     "filter_label": "Filter:",
     "empty": "No news matches the filter",
@@ -160,7 +160,7 @@
     "keys": {
       "anthropic": {
         "label": "Anthropic API Key",
-        "help": "Powers Claude Haiku 4.5 sentiment analysis; required."
+        "help": "Powers Claude Sonnet 5.5 sentiment analysis; required."
       },
       "marketaux": {
         "label": "Marketaux Key",

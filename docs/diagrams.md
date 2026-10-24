@@ -82,7 +82,7 @@ erDiagram
         string sentiment_label "positive|negative|neutral"
         float confidence
         text analyzed_text "nullable"
-        string model_version "claude-haiku-4-5 | alpha_vantage_v1"
+        string model_version "claude-sonnet-5-5 | alpha_vantage_v1"
         jsonb analysis_metadata "key_drivers,is_clickbait,reasoning"
         datetime analyzed_at
     }
@@ -164,7 +164,7 @@ flowchart TD
     F3 --> F4["AlphaVantage baseline →<br/>sentiment_results(alpha_vantage_v1)"]
 
     F4 --> G["stage=analyzing<br/>backfill_sentiment.run"]
-    G --> G1["對未分析 rows 呼叫<br/>Claude Haiku 4.5<br/>(system prompt >4096 → prompt cache)"]
+    G --> G1["對未分析 rows 呼叫<br/>Claude Sonnet 5.5<br/>(system prompt >4096 → prompt cache)"]
     G1 --> G2["寫入 sentiment_results<br/>雙語 + is_clickbait"]
 
     G2 --> H["stage=summarizing<br/>daily_summary.run_for_date<br/>(昨天 + 今天)"]
@@ -215,7 +215,7 @@ sequenceDiagram
 
 ---
 
-## 4. 三處 LLM 用途（皆 Claude Haiku 4.5）
+## 4. 三處 LLM 用途（皆 Claude Sonnet 5.5）
 
 ```mermaid
 flowchart LR

@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     jina_api_key: str = ""
 
     anthropic_api_key: str = ""
-    anthropic_model: str = "claude-haiku-4-5"
+    anthropic_model: str = "claude-sonnet-5-5"
 
     secret_key: str = "change-me"
     algorithm: str = "HS256"

@@ -12,7 +12,7 @@ Date assignment:
     just because they were published earlier.
 
 Source filter:
-    Only ``model_version='claude-haiku-4-5'`` rows feed the score. The
+    Only ``model_version='claude-sonnet-5-5'`` rows feed the score. The
     Alpha Vantage baseline rows are excluded (they're a comparison signal,
     not the primary one).
 
@@ -45,7 +45,7 @@ from models.news import News
 from models.sentiment import SentimentResult
 from models.stock import Stock
 
-CLAUDE = "claude-haiku-4-5"
+CLAUDE = "claude-sonnet-5-5"
 
 
 @dataclass
