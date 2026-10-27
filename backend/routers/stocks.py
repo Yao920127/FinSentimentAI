@@ -83,7 +83,23 @@ async def create_stock(
         await db.commit()
     except IntegrityError:
         await db.rollback()
-        raise HTTPException(status.HTTP_409_CONFLICT, f"Stock {symbol} already exists") from None
+        existing = (
+            await db.execute(
+                select(Stock).where(Stock.symbol == symbol, Stock.user_id == user.id)
+            )
+        ).scalar_one_or_none()
+        # Re-adding a stock whose name is still the placeholder (== symbol)
+        # repairs it with the looked-up company name instead of failing.
+        if existing is None or existing.name != existing.symbol or name == symbol:
+            raise HTTPException(
+                status.HTTP_409_CONFLICT, f"Stock {symbol} already exists"
+            ) from None
+        existing.name = name
+        existing.exchange = existing.exchange or exchange
+        existing.sector = existing.sector or sector
+        await db.commit()
+        await db.refresh(existing)
+        return existing
     await db.refresh(stock)
     return stock
 
