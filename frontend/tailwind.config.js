@@ -6,6 +6,8 @@ export default {
     extend: {
       colors: {
         bg: 'var(--color-bg)',
+        well: 'var(--color-well)',
+        ink: 'var(--dp-color-ink)',
         surface: {
           DEFAULT: 'var(--color-surface)',
           2: 'var(--color-surface-2)',
@@ -24,6 +26,7 @@ export default {
           DEFAULT: 'var(--color-primary)',
           hover: 'var(--color-primary-hover)',
           soft: 'var(--color-primary-soft)',
+          on: 'var(--color-on-primary)',
         },
         accent: {
           DEFAULT: 'var(--color-accent)',
@@ -40,33 +43,23 @@ export default {
         },
       },
       fontFamily: {
-        sans: [
-          'Fira Sans',
-          'ui-sans-serif',
-          'system-ui',
-          '-apple-system',
-          'Segoe UI',
-          'Roboto',
-          'sans-serif',
-        ],
-        mono: [
-          'Fira Code',
-          'ui-monospace',
-          'SFMono-Regular',
-          'Menlo',
-          'monospace',
-        ],
+        sans: ['var(--dp-typography-sans)'],
+        mono: ['var(--dp-typography-mono)'],
       },
       borderRadius: {
-        lg: '0.625rem',
+        lg: 'var(--dp-radius-key)',
         xl: '0.875rem',
         '2xl': '1.125rem',
       },
       boxShadow: {
-        soft: '0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06)',
-        elevated:
-          '0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.06)',
+        raised: 'var(--shadow-raised)',
+        well: 'var(--shadow-well)',
+        pressed: 'var(--shadow-pressed)',
+        soft: 'var(--shadow-raised)',
+        elevated: 'var(--shadow-raised)',
       },
+      transitionDuration: { key: 'var(--dp-motion-key)' },
+      transitionTimingFunction: { settle: 'var(--dp-motion-settle)' },
     },
   },
   plugins: [],

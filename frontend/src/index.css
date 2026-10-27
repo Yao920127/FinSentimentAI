@@ -1,36 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Industrial chassis: raised keys, recessed wells, orange indicators.
+   --dp-* are the authoritative design tokens; --color-* are the semantic
+   aliases the components (via tailwind.config.js) consume. */
 :root {
-  --color-bg: #f8fafc;
-  --color-surface: #ffffff;
-  --color-surface-2: #f1f5f9;
-  --color-surface-raised: #ffffff;
+  --dp-color-chassis: #cbd0d2;
+  --dp-color-raised: #e7eaeb;
+  --dp-color-well: #b6bec2;
+  --dp-color-ink: #181e22;
+  --dp-color-label: #414b52;
+  --dp-color-field: #20272b;
+  --dp-color-on-field: #f2f4f4;
+  --dp-color-on-field-muted: #d8dee1;
+  --dp-color-accent: #f15b22;
+  --dp-typography-sans: 'Host Grotesk', 'PingFang TC', 'Noto Sans TC', ui-sans-serif,
+    system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --dp-typography-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --dp-radius-key: 4px;
+  --dp-motion-key: 140ms;
+  --dp-motion-settle: cubic-bezier(0.3, 0.7, 0.4, 1.25);
 
-  --color-border: #e2e8f0;
-  --color-border-strong: #cbd5e1;
+  --color-bg: var(--dp-color-chassis);
+  --color-surface: var(--dp-color-raised);
+  --color-surface-2: #d6dbdd;
+  --color-surface-raised: var(--dp-color-raised);
+  --color-well: var(--dp-color-well);
 
-  --color-text: #0f172a;
-  --color-text-muted: #475569;
-  --color-text-subtle: #64748b;
+  --color-border: #aab3b8;
+  --color-border-strong: #8a959b;
 
-  --color-primary: #1e40af;
-  --color-primary-hover: #1e3a8a;
-  --color-primary-soft: #dbeafe;
+  --color-text: var(--dp-color-ink);
+  --color-text-muted: var(--dp-color-label);
+  --color-text-subtle: #4f5a61;
 
-  --color-accent: #d97706;
-  --color-accent-hover: #b45309;
-  --color-accent-soft: #fef3c7;
+  /* Primary = dark field key (ink). Orange is reserved for indicators. */
+  --color-primary: var(--dp-color-ink);
+  --color-primary-hover: #000000;
+  --color-primary-soft: var(--dp-color-well);
+  --color-on-primary: var(--dp-color-on-field);
 
-  --color-positive: #15803d;
-  --color-positive-soft: #dcfce7;
+  --color-accent: var(--dp-color-accent);
+  --color-accent-hover: #d94a14;
+  --color-accent-soft: #fbd9c9;
+
+  --color-positive: #166534;
+  --color-positive-soft: #cfe6d6;
   --color-negative: #b91c1c;
-  --color-negative-soft: #fee2e2;
-  --color-neutral: #64748b;
-  --color-neutral-soft: #f1f5f9;
+  --color-negative-soft: #f2d0d0;
+  --color-neutral: #4f5a61;
+  --color-neutral-soft: #d6dbdd;
+
+  /* Light falls from the upper left: raised parts get a pale top edge and a
+     darker lower edge; recesses reverse that. */
+  --shadow-raised:
+    inset 1px 1px 0 rgb(255 255 255 / 0.75), inset -1px -1px 0 rgb(24 30 34 / 0.14),
+    2px 3px 6px rgb(24 30 34 / 0.2);
+  --shadow-well:
+    inset 2px 2px 4px rgb(24 30 34 / 0.28), inset -1px -1px 0 rgb(255 255 255 / 0.55);
+  --shadow-pressed:
+    inset 2px 2px 3px rgb(24 30 34 / 0.34), inset -1px -1px 0 rgb(255 255 255 / 0.5);
+  --chassis-sheen: rgb(255 255 255 / 0.35);
 
   color-scheme: light;
   font-synthesis: none;
@@ -40,32 +73,41 @@
 }
 
 .dark {
-  --color-bg: #0b1220;
-  --color-surface: #111a2e;
-  --color-surface-2: #172238;
-  --color-surface-raised: #1a2540;
+  --color-bg: #171c20;
+  --color-surface: #252d32;
+  --color-surface-2: #2f383e;
+  --color-surface-raised: #2c353b;
+  --color-well: #0f1316;
 
-  --color-border: #1f2a44;
-  --color-border-strong: #334155;
+  --color-border: #3a444b;
+  --color-border-strong: #54616a;
 
-  --color-text: #e2e8f0;
-  --color-text-muted: #94a3b8;
-  --color-text-subtle: #64748b;
+  --color-text: #f2f4f4;
+  --color-text-muted: #d8dee1;
+  --color-text-subtle: #a3adb3;
 
-  --color-primary: #3b82f6;
-  --color-primary-hover: #60a5fa;
-  --color-primary-soft: #1e3a8a;
+  --color-primary: #f2f4f4;
+  --color-primary-hover: #ffffff;
+  --color-primary-soft: #3a444b;
+  --color-on-primary: #181e22;
 
-  --color-accent: #f59e0b;
-  --color-accent-hover: #fbbf24;
-  --color-accent-soft: #422006;
+  --color-accent: #f15b22;
+  --color-accent-hover: #ff7a45;
+  --color-accent-soft: #4a2415;
 
-  --color-positive: #22c55e;
-  --color-positive-soft: #052e16;
+  --color-positive: #4ade80;
+  --color-positive-soft: #0f2e1a;
   --color-negative: #f87171;
-  --color-negative-soft: #450a0a;
-  --color-neutral: #94a3b8;
-  --color-neutral-soft: #1e293b;
+  --color-negative-soft: #3f1515;
+  --color-neutral: #a3adb3;
+  --color-neutral-soft: #2f383e;
+
+  --shadow-raised:
+    inset 1px 1px 0 rgb(255 255 255 / 0.08), inset -1px -1px 0 rgb(0 0 0 / 0.4),
+    2px 3px 6px rgb(0 0 0 / 0.45);
+  --shadow-well: inset 2px 2px 4px rgb(0 0 0 / 0.6), inset -1px -1px 0 rgb(255 255 255 / 0.06);
+  --shadow-pressed: inset 2px 2px 3px rgb(0 0 0 / 0.65), inset -1px -1px 0 rgb(255 255 255 / 0.06);
+  --chassis-sheen: rgb(255 255 255 / 0.04);
 
   color-scheme: dark;
 }
@@ -77,14 +119,21 @@ body {
 }
 
 body {
-  background: var(--color-bg);
+  background:
+    linear-gradient(160deg, var(--chassis-sheen), transparent 45%), var(--color-bg);
+  background-attachment: fixed;
   color: var(--color-text);
-  font-family:
-    'Fira Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
-    sans-serif;
+  font-family: var(--dp-typography-sans);
   transition:
     background-color 200ms ease,
     color 200ms ease;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 ::selection {

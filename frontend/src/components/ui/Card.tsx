@@ -20,8 +20,7 @@ export function Card({
   return (
     <section
       className={cn(
-        'rounded-xl border border-border bg-surface shadow-soft',
-        'dark:shadow-none',
+        'rounded-xl border border-border bg-surface shadow-raised',
         PAD[padding],
         className,
       )}
@@ -48,7 +47,7 @@ export function CardHeader({ title, meta, action, className }: CardHeaderProps) 
       )}
     >
       <div className="flex items-center gap-3 min-w-0">
-        <h2 className="text-base md:text-lg font-semibold text-text">{title}</h2>
+        <h2 className="text-base md:text-lg font-bold text-text">{title}</h2>
         {meta && <span className="text-xs text-text-subtle">{meta}</span>}
       </div>
       {action && <div className="flex items-center gap-2">{action}</div>}

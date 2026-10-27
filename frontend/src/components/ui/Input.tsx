@@ -12,13 +12,13 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
   ref,
 ) {
   const base = cn(
-    'h-10 w-full rounded-lg border bg-surface text-text',
-    'placeholder:text-text-subtle',
-    'transition-colors duration-150',
+    'h-10 w-full rounded-lg border bg-well text-text shadow-well',
+    'placeholder:text-text-muted',
+    'transition-colors duration-key',
     'focus:outline-none focus:ring-2 focus:ring-offset-0',
     error
       ? 'border-sentiment-negative focus:ring-sentiment-negative/30'
-      : 'border-border hover:border-border-strong focus:border-primary focus:ring-primary/30',
+      : 'border-border hover:border-border-strong focus:border-accent focus:ring-accent/40',
     'disabled:opacity-50 disabled:cursor-not-allowed',
     leftIcon ? 'pl-10' : 'pl-4',
     rightSlot ? 'pr-10' : 'pr-4',

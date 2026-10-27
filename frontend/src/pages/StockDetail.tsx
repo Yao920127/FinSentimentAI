@@ -332,7 +332,7 @@ export default function StockDetail() {
                 'transition-colors duration-150',
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
                 sentFilter === key
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-primary-on'
                   : 'bg-surface-2 text-text-muted hover:text-text hover:bg-surface',
               )}
             >

@@ -26,8 +26,8 @@ const TONE: Record<BadgeTone, string> = {
   positive: 'bg-sentiment-positive-soft text-sentiment-positive',
   negative: 'bg-sentiment-negative-soft text-sentiment-negative',
   warning: 'bg-accent-soft text-accent',
-  info: 'bg-primary-soft text-primary',
-  primary: 'bg-primary text-white',
+  info: 'bg-primary-soft text-text',
+  primary: 'bg-primary text-primary-on',
 }
 
 export default function Badge({
@@ -41,7 +41,8 @@ export default function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full font-medium whitespace-nowrap',
+        'inline-flex items-center rounded-lg font-mono font-medium whitespace-nowrap',
+        'border border-border/60 shadow-well',
         SIZE[size],
         TONE[tone],
         className,

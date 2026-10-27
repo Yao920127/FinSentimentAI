@@ -17,7 +17,7 @@ export default function LanguageSwitcher() {
     <div
       role="group"
       aria-label="Language"
-      className="inline-flex rounded-lg border border-border bg-surface overflow-hidden text-xs"
+      className="inline-flex rounded-lg border border-border bg-well shadow-well overflow-hidden text-xs"
     >
       {LANGUAGES.map((l) => (
         <button
@@ -25,10 +25,10 @@ export default function LanguageSwitcher() {
           type="button"
           onClick={() => i18n.changeLanguage(l.code)}
           className={cn(
-            'h-8 min-w-[2.25rem] px-3 font-medium transition-colors duration-150',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
+            'h-8 min-w-[2.25rem] px-3 font-medium transition-colors duration-key',
+            'focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent',
             current === l.code
-              ? 'bg-primary text-white'
+              ? 'bg-primary text-primary-on'
               : 'text-text-muted hover:bg-surface-2 hover:text-text',
           )}
           aria-pressed={current === l.code ? 'true' : 'false'}

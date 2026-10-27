@@ -4,19 +4,16 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import desc, func, or_, select
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 
 from database import get_db
 from models.news import News
-from models.news_translation import NewsTranslation
 from models.sentiment import SentimentResult
 from models.stock import Stock
 from models.user import User
 from schemas.news import NewsDetailResponse, NewsListItem, SentimentSnippet
 from services.auth import current_user
-from services.translator import TranslationError, translate_news
 
 CLAUDE_MODEL_VERSION = "claude-sonnet-5-5"
 
@@ -172,63 +169,3 @@ async def get_news(
         sentiment=_to_snippet(sentiment),
         analysis_metadata=sentiment.analysis_metadata if sentiment else None,
     )
-
-
-@router.get("/{news_id}/translation/{lang}")
-async def get_news_translation(
-    news_id: int,
-    lang: str,
-    user: Annotated[User, Depends(current_user)],
-    db: AsyncSession = Depends(get_db),
-) -> dict:
-    """Return cached title+body translation for the article into ``lang``;
-    populate the cache on first request. Idempotent — concurrent requests
-    converge to one DB row via the unique (news_id, target_language) index."""
-    if lang not in ("zh-TW", "en"):
-        raise HTTPException(422, "lang must be 'zh-TW' or 'en'")
-
-    # Ownership check up front — the article must belong to one of the user's stocks.
-    news = (
-        await db.execute(
-            select(News)
-            .join(Stock, Stock.id == News.stock_id)
-            .where(News.id == news_id, Stock.user_id == user.id)
-        )
-    ).scalar_one_or_none()
-    if news is None:
-        raise HTTPException(404, f"News {news_id} not found")
-
-    cached = (
-        await db.execute(
-            select(NewsTranslation)
-            .where(NewsTranslation.news_id == news_id)
-            .where(NewsTranslation.target_language == lang)
-        )
-    ).scalar_one_or_none()
-    if cached is not None:
-        return {
-            "title": cached.translated_title,
-            "body": cached.translated_body,
-            "cached": True,
-        }
-
-    try:
-        title, body = await translate_news(news, lang)
-    except TranslationError as exc:
-        raise HTTPException(502, f"translation failed: {exc}") from exc
-
-    row = NewsTranslation(
-        news_id=news_id,
-        target_language=lang,
-        translated_title=title,
-        translated_body=body,
-        model_version=CLAUDE_MODEL_VERSION,
-    )
-    db.add(row)
-    try:
-        await db.commit()
-    except IntegrityError:
-        # Race: another request inserted the same (news_id, lang) concurrently.
-        # The translation we computed is still valid; just return it.
-        await db.rollback()
-    return {"title": title, "body": body, "cached": False}

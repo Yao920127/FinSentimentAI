@@ -1,25 +1,32 @@
 """Auto-fill stock metadata (name / exchange / sector) for a bare ticker.
 
-Used by POST /api/stocks when the user only supplies a symbol. Calls Finnhub's
-/stock/profile2 endpoint (free tier, 60 req/min) and degrades gracefully when
-the API key is missing or the symbol is unknown."""
+Used by POST /api/stocks when the user only supplies a symbol. The name comes
+from the SEC's public ticker list (no key needed); exchange / sector, and the
+name when the SEC list lacks the ticker, come from Finnhub's /stock/profile2
+using the caller's own key. Degrades gracefully when either is unavailable."""
 
 from __future__ import annotations
 
 import httpx
 from loguru import logger
 
-from config import get_settings
+from services.sec_tickers import lookup_company_name
 
 ENDPOINT = "https://finnhub.io/api/v1/stock/profile2"
 
 
-async def lookup_stock_profile(symbol: str) -> dict[str, str | None]:
+async def lookup_stock_profile(symbol: str, api_key: str) -> dict[str, str | None]:
     """Return {name, exchange, sector} for symbol. Each field may be None.
 
     Never raises — failures yield an empty dict so callers can fall back to
     user-supplied or symbol-derived defaults."""
-    api_key = get_settings().finnhub_api_key
+    profile = await _finnhub_profile(symbol, api_key)
+    if not profile.get("name"):
+        profile = {**profile, "name": await lookup_company_name(symbol)}
+    return profile
+
+
+async def _finnhub_profile(symbol: str, api_key: str) -> dict[str, str | None]:
     if not api_key:
         return {}
     try:

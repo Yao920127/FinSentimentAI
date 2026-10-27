@@ -20,11 +20,11 @@ const SIZE: Record<Size, string> = {
 
 const VARIANT: Record<Variant, string> = {
   ghost:
-    'text-text-muted hover:text-text hover:bg-surface-2 focus-visible:ring-primary/30',
+    'text-text-muted hover:text-text hover:bg-surface-2 hover:shadow-raised',
   secondary:
-    'bg-surface text-text border border-border hover:bg-surface-2 hover:border-border-strong focus-visible:ring-primary/30',
+    'bg-surface text-text border border-border hover:border-border-strong shadow-raised',
   danger:
-    'text-text-muted hover:text-sentiment-negative hover:bg-sentiment-negative-soft focus-visible:ring-sentiment-negative/40',
+    'text-text-muted hover:text-sentiment-negative hover:bg-sentiment-negative-soft',
 }
 
 const IconButton = forwardRef<HTMLButtonElement, Props>(function IconButton(
@@ -37,8 +37,9 @@ const IconButton = forwardRef<HTMLButtonElement, Props>(function IconButton(
       type="button"
       className={cn(
         'inline-flex items-center justify-center rounded-lg',
-        'transition-colors duration-150 ease-out',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
+        'transition-[transform,box-shadow,background-color,color] duration-key ease-settle',
+        'active:translate-y-px active:shadow-pressed motion-reduce:active:translate-y-0',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         SIZE[size],
         VARIANT[variant],

@@ -93,17 +93,7 @@
     "clickbait_title": "偵測為標題殺人",
     "clickbait_desc": "標題情緒與內文不一致；以下評分基於內文判讀",
     "drivers": "關鍵驅動因子",
-    "reasoning": "推理",
-    "full_body": "完整內文",
-    "snippet_warning": "此篇僅取得 API 摘要（Jina/trafilatura 都失敗，多半是付費牆）",
-    "no_body": "(無內文)",
-    "translating": "正在從 {{lang}} 翻譯成繁體中文…",
-    "translating_long": "正在從 {{lang}} 翻譯成繁體中文，可能需要 30-60 秒，請耐心等候…",
-    "translated_from": "已從 {{lang}} 翻譯成繁體中文",
-    "translation_failed": "翻譯失敗，顯示原文",
-    "view_original": "查看原文",
-    "view_translation": "顯示翻譯",
-    "showing_original": "顯示原文中"
+    "reasoning": "推理"
   },
   "stock_detail": {
     "not_found": "找不到股票「{{symbol}}」。",
@@ -128,14 +118,13 @@
     "running": "處理中…",
     "background_hint": "關閉本頁也不會中斷，回來時會繼續顯示進度 (job #{{id}})",
     "failed": "抓取失敗",
-    "run_number": "今日第 {{n}} 次",
+    "run_number": "第 {{n}} 次",
     "indicator": {
       "tasks_running_one": "{{count}} 個任務進行中",
       "tasks_running_other": "{{count}} 個任務進行中",
       "tasks_running": "{{count}} 個任務進行中",
       "click_to_view": "點擊查看詳細進度"
     },
-    "run_number": "第 {{n}} 次",
     "run_number_today": "今日第 {{n}} 次分析"
   },
   "settings": {
@@ -191,12 +180,10 @@
     "empty": "尚無股票"
   },
   "stock_form": {
-    "symbol_placeholder": "代碼 (TSLA / NVDA / 2330)",
-    "name_placeholder": "名稱 (Tesla / 台積電)",
+    "symbol_placeholder": "代碼（僅限美股，例如 NVDA / AAPL）",
     "name_optional_placeholder": "名稱（留空則用代碼）",
-    "exchange_placeholder": "交易所 (NASDAQ / TWSE，可空)",
     "sector_placeholder": "產業 (可空)",
-    "auto_fill_hint": "送出後系統會自動透過 Finnhub 查詢公司名稱、交易所與產業；查不到時以代碼作為名稱。",
+    "auto_fill_hint": "送出後系統會用你的 Finnhub 金鑰查詢公司名稱、交易所與產業；僅支援美股代碼。",
     "submit": "新增",
     "adding": "新增中…",
     "add_and_analyze": "新增 {{symbol}} 並分析"

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import re
 from datetime import date, timedelta
 from typing import Annotated
 
@@ -21,9 +22,13 @@ from schemas.refresh import RefreshJobPublic, StockCreate, StockImpact
 from schemas.stock import StockDetailResponse, StockListItem, StockSentimentPoint
 from services.auth import current_user
 from services.refresh_runner import run_refresh_job
+from services.settings_store import get_user_keys
 from services.stock_lookup import lookup_stock_profile
 
 router = APIRouter(prefix="/api/stocks", tags=["stocks"])
+
+# US tickers only: 1-5 letters, optional class suffix (BRK.B / BRK-B).
+US_TICKER_RE = re.compile(r"^[A-Z]{1,5}([.-][A-Z]{1,2})?$")
 
 
 @router.get("", response_model=list[StockListItem])
@@ -48,8 +53,8 @@ async def create_stock(
     db: AsyncSession = Depends(get_db),
 ) -> Stock:
     symbol = payload.symbol.strip().upper()
-    if not symbol or not symbol.replace("_", "").isalnum():
-        raise HTTPException(422, "symbol must be alphanumeric (US tickers) or digits (TW tickers)")
+    if not US_TICKER_RE.fullmatch(symbol):
+        raise HTTPException(422, "Only US stock tickers are supported (e.g. NVDA, AAPL, BRK.B)")
 
     name = (payload.name or "").strip()
     exchange = (payload.exchange or "").strip() or None
@@ -60,7 +65,8 @@ async def create_stock(
     # so the row still satisfies our NOT NULL constraint and shows something
     # meaningful in the UI.
     if not name or name == symbol:
-        profile = await lookup_stock_profile(symbol)
+        keys = await get_user_keys(user.id, session=db)
+        profile = await lookup_stock_profile(symbol, keys.finnhub)
         name = profile.get("name") or symbol
         exchange = exchange or profile.get("exchange")
         sector = sector or profile.get("sector")

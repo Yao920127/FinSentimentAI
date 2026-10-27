@@ -93,17 +93,7 @@
     "clickbait_title": "Detected as clickbait",
     "clickbait_desc": "Headline sentiment doesn't match body; scoring is based on the body.",
     "drivers": "Key drivers",
-    "reasoning": "Reasoning",
-    "full_body": "Full body",
-    "snippet_warning": "Only the API snippet is available (Jina/trafilatura both failed — likely paywalled).",
-    "no_body": "(no body)",
-    "translating": "Translating from {{lang}} to English…",
-    "translating_long": "Translating from {{lang}} to English — may take 30-60 seconds, please wait…",
-    "translated_from": "Translated from {{lang}} to English",
-    "translation_failed": "Translation failed; showing original",
-    "view_original": "View original",
-    "view_translation": "Show translation",
-    "showing_original": "Showing original"
+    "reasoning": "Reasoning"
   },
   "stock_detail": {
     "not_found": "Stock \"{{symbol}}\" not found.",
@@ -128,14 +118,13 @@
     "running": "Processing…",
     "background_hint": "Safe to close this tab — progress will resume when you return (job #{{id}})",
     "failed": "Fetch failed",
-    "run_number": "today's #{{n}}",
+    "run_number": "#{{n}}",
     "indicator": {
       "tasks_running_one": "{{count}} task running",
       "tasks_running_other": "{{count}} tasks running",
       "tasks_running": "{{count}} tasks running",
       "click_to_view": "Click to view progress"
     },
-    "run_number": "#{{n}}",
     "run_number_today": "Today's analysis #{{n}}"
   },
   "settings": {
@@ -191,12 +180,10 @@
     "empty": "No stocks yet"
   },
   "stock_form": {
-    "symbol_placeholder": "Symbol (TSLA / NVDA / 2330)",
-    "name_placeholder": "Name (Tesla / TSMC)",
+    "symbol_placeholder": "US ticker only (e.g. NVDA / AAPL)",
     "name_optional_placeholder": "Name (defaults to symbol if blank)",
-    "exchange_placeholder": "Exchange (NASDAQ / TWSE, optional)",
     "sector_placeholder": "Sector (optional)",
-    "auto_fill_hint": "Submitting looks up name / exchange / sector via Finnhub. Falls back to symbol-as-name if not found.",
+    "auto_fill_hint": "Submitting looks up the company name / exchange / sector with your Finnhub key. US tickers only.",
     "submit": "Add",
     "adding": "Adding…",
     "add_and_analyze": "Add {{symbol}} and analyze"

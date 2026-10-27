@@ -18,7 +18,7 @@
 
 ## 這是什麼
 
-FinSentiment AI 是一個針對**美股 + 台股**的新聞情緒儀表板。核心產品理念是 **anti-clickbait（反標題殺人）**：情緒分數來自 **Claude Sonnet 5.5** 對**整篇新聞內文**的雙語（繁中 + 英文）結構化分析，而不是只看標題。一顆 LLM 取代了原計劃的 FinBERT + 中文 RoBERTa 雙模型方案，免去扛 2.4GB torch 的負擔。
+FinSentiment AI 是一個針對**美股**的新聞情緒儀表板。核心產品理念是 **anti-clickbait（反標題殺人）**：情緒分數來自 **Claude Sonnet 5.5** 對**整篇新聞內文**的雙語（繁中 + 英文）結構化分析，而不是只看標題。一顆 LLM 取代了原計劃的 FinBERT + 中文 RoBERTa 雙模型方案，免去扛 2.4GB torch 的負擔。
 
 > 系統是 **完全多租戶 / per-user 隔離** 的：每位使用者有自己的觀察清單、自己的新聞與情緒資料、以及自己加密儲存的 API key。沒有任何背景排程器 — **所有分析都是 on-demand**，由使用者用自己的 key 主動觸發。
 

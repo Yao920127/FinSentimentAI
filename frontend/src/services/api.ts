@@ -152,33 +152,6 @@ export async function getNews(id: number): Promise<NewsDetail> {
   return data
 }
 
-export type NewsTranslationLang = 'zh-TW' | 'en'
-
-export interface NewsTranslationResult {
-  title: string
-  body: string
-  cached: boolean
-}
-
-/** Lazy on-demand translation of a news article's title + body. The backend
- *  caches in `news_translations` keyed by (news_id, target_language). First
- *  call costs ~$0.01; subsequent calls are pure DB reads. */
-export async function getNewsTranslation(
-  id: number,
-  lang: NewsTranslationLang,
-): Promise<NewsTranslationResult> {
-  const { data } = await api.get<NewsTranslationResult>(
-    `/news/${id}/translation/${lang}`,
-    {
-      // First call streams a Claude translation (30-90 s for long articles).
-      // Subsequent calls hit the news_translations cache and return in ms.
-      // Override the default 15s axios timeout for this slow endpoint only.
-      timeout: 120_000,
-    },
-  )
-  return data
-}
-
 // ─── Auth (Google Sign-In only) ────────────────────────────────────────────
 export async function googleLogin(credential: string): Promise<AuthToken> {
   const { data } = await api.post<AuthToken>('/auth/google', { credential })

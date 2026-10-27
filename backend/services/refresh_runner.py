@@ -31,7 +31,9 @@ from database import SessionLocal
 from models.refresh_job import RefreshJob
 from services import daily_summary
 from services.pipeline import run_for_ticker
+from models.stock import Stock
 from services.settings_store import get_user_keys
+from services.stock_lookup import lookup_stock_profile
 from scripts.backfill_sentiment import run as run_backfill
 
 # Cap concurrent refreshes globally so we don't blow Anthropic / Jina rate
@@ -49,6 +51,21 @@ async def _set_state(
     payload.update(fields)
     await db.execute(update(RefreshJob).where(RefreshJob.id == job_id).values(**payload))
     await db.commit()
+
+
+async def _fill_missing_name(db: AsyncSession, symbol: str, user_id: int, finnhub_key: str) -> None:
+    """Replace a placeholder name (name == symbol) with the real company name."""
+    stock = (
+        await db.execute(select(Stock).where(Stock.symbol == symbol, Stock.user_id == user_id))
+    ).scalar_one_or_none()
+    if stock is None or stock.name != stock.symbol:
+        return
+    profile = await lookup_stock_profile(symbol, finnhub_key)
+    if profile.get("name"):
+        stock.name = profile["name"]
+        stock.exchange = stock.exchange or profile.get("exchange")
+        stock.sector = stock.sector or profile.get("sector")
+        await db.commit()
 
 
 async def run_refresh_job(job_id: int, symbol: str, user_id: int) -> None:
@@ -80,6 +97,11 @@ async def run_refresh_job(job_id: int, symbol: str, user_id: int) -> None:
                         completed_at=datetime.now(UTC),
                     )
                     return
+
+                try:
+                    await _fill_missing_name(db, symbol, user_id, keys.finnhub)
+                except Exception:  # noqa: BLE001 — cosmetic, never block a refresh
+                    logger.warning("[refresh job {}] name backfill failed", job_id)
 
                 try:
                     p_stats = await run_for_ticker(symbol, user_id=user_id, keys=keys)

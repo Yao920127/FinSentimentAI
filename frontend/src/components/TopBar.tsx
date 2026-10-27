@@ -9,11 +9,13 @@ import LanguageSwitcher from './LanguageSwitcher'
 const navItem = ({ isActive }: { isActive: boolean }) =>
   cn(
     'inline-flex items-center justify-center h-10 px-3 sm:px-4 rounded-lg text-sm font-medium gap-1.5',
-    'transition-colors duration-150',
-    'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
+    'transition-[transform,box-shadow,background-color,color] duration-key ease-settle',
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
+    'motion-reduce:hover:translate-y-0',
     isActive
-      ? 'bg-primary-soft text-primary'
-      : 'text-text-muted hover:text-text hover:bg-surface-2',
+      ? // Pressed-in key with an orange selection lamp (aria-current carries the textual state).
+        'bg-well text-text shadow-pressed before:content-[""] before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent'
+      : 'bg-surface text-text-muted shadow-raised hover:text-text hover:-translate-y-px active:translate-y-px active:shadow-pressed',
   )
 
 export default function TopBar() {
@@ -27,14 +29,14 @@ export default function TopBar() {
   }
 
   return (
-    <header className="sticky top-0 z-20 border-b border-border bg-surface/90 backdrop-blur-md">
+    <header className="sticky top-0 z-20 border-b border-border-strong bg-bg/95 shadow-raised backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 flex items-center justify-between gap-2 sm:gap-3">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 font-semibold text-text hover:opacity-80 transition-opacity whitespace-nowrap"
+          className="inline-flex items-center gap-2 font-semibold text-text hover:opacity-80 transition-opacity duration-key whitespace-nowrap"
           aria-label="FinSentiment AI"
         >
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-on shadow-raised">
             <TrendingUp size={16} />
           </span>
           <span className="hidden md:inline">FinSentiment AI</span>

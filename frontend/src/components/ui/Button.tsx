@@ -22,15 +22,15 @@ const SIZE: Record<Size, string> = {
 
 const VARIANT: Record<Variant, string> = {
   primary:
-    'bg-primary text-white hover:bg-primary-hover focus-visible:ring-primary/40 shadow-soft',
+    'bg-primary text-primary-on hover:bg-primary-hover shadow-raised',
   secondary:
-    'bg-surface text-text border border-border hover:bg-surface-2 hover:border-border-strong focus-visible:ring-primary/30',
+    'bg-surface text-text border border-border hover:border-border-strong shadow-raised',
   ghost:
-    'text-text-muted hover:text-text hover:bg-surface-2 focus-visible:ring-primary/30',
+    'text-text-muted hover:text-text hover:bg-surface-2 hover:shadow-raised',
   danger:
-    'bg-sentiment-negative text-white hover:opacity-90 focus-visible:ring-sentiment-negative/40 shadow-soft',
+    'bg-sentiment-negative text-white hover:opacity-90 shadow-raised',
   accent:
-    'bg-accent text-white hover:bg-accent-hover focus-visible:ring-accent/40 shadow-soft',
+    'bg-accent text-ink hover:bg-accent-hover shadow-raised',
 }
 
 const Button = forwardRef<HTMLButtonElement, Props>(function Button(
@@ -54,9 +54,11 @@ const Button = forwardRef<HTMLButtonElement, Props>(function Button(
       disabled={disabled || loading}
       className={cn(
         'inline-flex items-center justify-center rounded-lg font-medium whitespace-nowrap',
-        'transition-colors duration-150 ease-out',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
+        'transition-[transform,box-shadow,background-color,color] duration-key ease-settle',
+        'hover:-translate-y-px active:translate-y-px active:shadow-pressed',
+        'motion-reduce:hover:translate-y-0 motion-reduce:active:translate-y-0',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
+        'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0',
         SIZE[size],
         VARIANT[variant],
         fullWidth && 'w-full',
